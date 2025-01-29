@@ -1,0 +1,8 @@
+.venv/
+input_results.csv
+blink.py
+output.csv
+output.py
+read_input.py
+results.csv
+
