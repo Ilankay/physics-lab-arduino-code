@@ -16,7 +16,7 @@ def high_precision_sleep(duration):
         else:
             pass
 
-def read_input(board, dur, cr):
+def read_input(board, dur, cr,path = ""):
     interval = 1/cr
     time_array = np.arange(time.perf_counter(), time.perf_counter()+dur, interval)
     results = np.zeros(time_array.shape)
@@ -28,7 +28,7 @@ def read_input(board, dur, cr):
         high_precision_sleep(interval)
 
     df = pd.DataFrame({'time': time_array, 'voltage': results})
-    df.to_csv('results.csv')
+    df.to_csv(path+'results.csv')
     print(results)
 
 def experiment(input_board,output_board,dur,cr_in,cr_out):
@@ -55,7 +55,7 @@ def experiment(input_board,output_board,dur,cr_in,cr_out):
 def make_output(board,dur,cr,path=""):
     interval = 1/cr
     time_array = np.arange(time.perf_counter(), time.perf_counter()+dur, interval)
-    arr = np.array([0]*int(1/cr), [1]*int(1/cr))
+    arr = np.array([0,1])
     random_data = np.tile(arr, len(time_array))
     random_data = random_data[:len(time_array)]
     for i in range(len(time_array)):
@@ -74,12 +74,12 @@ if __name__=="__main__":
     it1.start()
     
     
-    input_board = pyfirmata.Arduino('/dev/ttyACM1')
+   # input_board = pyfirmata.Arduino('/dev/ttyACM1')
 
-    input_board.analog[0].mode = pyfirmata.INPUT  
-    it = pyfirmata.util.Iterator(input_board)  
-    it.start()  
+   # input_board.analog[0].mode = pyfirmata.INPUT  
+   # it = pyfirmata.util.Iterator(input_board)  
+   # it.start()  
 
 
     print("starting threads")
-    make_output(input_board,output_board,5,100,100,path = "results/")
+    make_output(output_board,5,4,path = "results/")
